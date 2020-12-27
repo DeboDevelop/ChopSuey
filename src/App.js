@@ -1,9 +1,11 @@
+import Home from "./components/pages/Home";
+
 function App() {
-	return (
-		<div className="App">
-			<p>Chop Suey</p>
-		</div>
-	);
+    return (
+        <div className="App">
+            <Home />
+        </div>
+    );
 }
 
 export default App;

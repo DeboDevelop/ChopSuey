@@ -73,7 +73,7 @@ function NavBar() {
     return (
         <div className="App">
             <AppBar
-                position="static"
+                position="fixed"
                 className={clsx(classes.appBar, {
                     [classes.appBarShift]: open,
                 })}>
@@ -90,6 +90,7 @@ function NavBar() {
                         ChopSuey
                     </Typography>
                     <Button color="inherit">Login</Button>
+                    <Button color="inherit">Register</Button>
                 </Toolbar>
             </AppBar>
             <Drawer

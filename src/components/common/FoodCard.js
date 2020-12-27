@@ -11,6 +11,8 @@ import React from "react";
 const useStyles = makeStyles({
     root: {
         maxWidth: 345,
+        padding: 5,
+        margin: 10,
     },
     media: {
         height: 140,

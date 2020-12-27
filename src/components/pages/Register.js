@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     },
 });
 
-function Login() {
+function Register() {
     const classes = useStyles();
     return (
         <div>
@@ -26,11 +26,12 @@ function Login() {
                 justify="center"
                 style={{ minHeight: "100vh" }}>
                 <Grid item xs={12}>
-                    <Typography variant="h3">Login</Typography>
+                    <Typography variant="h3">Register</Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <Paper elevation={3} className={classes.formDiv}>
                         <FormControl noValidate autoComplete="off">
+                            <TextField id="username" placeholder="username" label="Username" variant="outlined" />
                             <TextField
                                 id="email"
                                 type="email"
@@ -39,8 +40,9 @@ function Login() {
                                 variant="outlined"
                             />
                             <TextField id="password" type="password" label="Password" variant="outlined" />
+                            <TextField id="password2" type="password" label="Confirm Password" variant="outlined" />
                             <Button variant="contained" color="secondary">
-                                Login
+                                Register
                             </Button>
                         </FormControl>
                     </Paper>
@@ -50,4 +52,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Register;

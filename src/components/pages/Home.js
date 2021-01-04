@@ -1,10 +1,9 @@
 import React from "react";
-import AllFoodCards from "../common/AllFoodCards";
 
 function Home() {
     return (
-        <div>
-            <AllFoodCards />
+        <div style={{ marginTop: 70 }}>
+            <h1>Hellow</h1>
         </div>
     );
 }

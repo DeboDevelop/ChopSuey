@@ -25,7 +25,11 @@ function FoodCard() {
         <div>
             <Card className={classes.root}>
                 <CardActionArea>
-                    <CardMedia className={classes.media} image="" title="Contemplative Reptile" />
+                    <CardMedia
+                        className={classes.media}
+                        image="https://via.placeholder.com/345x140"
+                        title="Contemplative Reptile"
+                    />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
                             Lizard

@@ -12,6 +12,10 @@ const useStyles = makeStyles({
         padding: 5,
         margin: 10,
     },
+    inpDiv: {
+        marginTop: 5,
+        marginBottom: 5,
+    },
 });
 
 function Register() {
@@ -31,17 +35,36 @@ function Register() {
                 <Grid item xs={12}>
                     <Paper elevation={3} className={classes.formDiv}>
                         <FormControl noValidate autoComplete="off">
-                            <TextField id="username" placeholder="username" label="Username" variant="outlined" />
+                            <TextField
+                                id="username"
+                                placeholder="username"
+                                label="Username"
+                                variant="outlined"
+                                className={classes.inpDiv}
+                            />
                             <TextField
                                 id="email"
                                 type="email"
                                 placeholder="user@example.com"
                                 label="Email"
                                 variant="outlined"
+                                className={classes.inpDiv}
                             />
-                            <TextField id="password" type="password" label="Password" variant="outlined" />
-                            <TextField id="password2" type="password" label="Confirm Password" variant="outlined" />
-                            <Button variant="contained" color="secondary">
+                            <TextField
+                                id="password"
+                                type="password"
+                                label="Password"
+                                variant="outlined"
+                                className={classes.inpDiv}
+                            />
+                            <TextField
+                                id="password2"
+                                type="password"
+                                label="Confirm Password"
+                                variant="outlined"
+                                className={classes.inpDiv}
+                            />
+                            <Button variant="contained" color="secondary" className={classes.inpDiv}>
                                 Register
                             </Button>
                         </FormControl>

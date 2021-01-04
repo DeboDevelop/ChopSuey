@@ -1,12 +1,13 @@
 import NavBar from "./components/common/NavBar";
-import Register from "./components/pages/Register";
+import FoodDetail from "./components/pages/FoodDetail";
 
 function App() {
     return (
         <div className="App">
             <NavBar />
-            {/* <Home /> */}
-            <Register />
+            <FoodDetail />
+            {/* <Login />
+            <Register /> */}
         </div>
     );
 }

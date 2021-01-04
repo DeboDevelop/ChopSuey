@@ -12,6 +12,10 @@ const useStyles = makeStyles({
         padding: 5,
         margin: 10,
     },
+    inpDiv: {
+        marginTop: 5,
+        marginBottom: 5,
+    },
 });
 
 function Login() {
@@ -37,9 +41,16 @@ function Login() {
                                 placeholder="user@example.com"
                                 label="Email"
                                 variant="outlined"
+                                className={classes.inpDiv}
                             />
-                            <TextField id="password" type="password" label="Password" variant="outlined" />
-                            <Button variant="contained" color="secondary">
+                            <TextField
+                                id="password"
+                                type="password"
+                                label="Password"
+                                variant="outlined"
+                                className={classes.inpDiv}
+                            />
+                            <Button variant="contained" color="secondary" className={classes.inpDiv}>
                                 Login
                             </Button>
                         </FormControl>

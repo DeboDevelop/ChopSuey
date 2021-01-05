@@ -1,7 +1,7 @@
-import axios from 'Axios';
+import axios from "Axios";
 
 const AxiosInstance = axios.create({
-    baseURL: 'https://api.example.com'
+    baseURL: "http://localhost:1337",
 });
 
 export default AxiosInstance;

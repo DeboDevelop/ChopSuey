@@ -12,8 +12,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MenuIcon from "@material-ui/icons/Menu";
+import axios from "axios";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const drawerWidth = 240;
 
@@ -70,6 +71,19 @@ function NavBar() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+        axios
+            .get("http://localhost:1337/categories")
+            .then(res => {
+                let newCategories = res.data.map(category => category["Food_type"]);
+                setCategories(() => [...newCategories]);
+            })
+            .catch(err => {
+                setCategories([]);
+                console.log(err);
+            });
+    }, []);
     return (
         <div className="App">
             <AppBar
@@ -115,21 +129,13 @@ function NavBar() {
                         </ListSubheader>
                     }>
                     <Divider />
-                    <ListItem button>
-                        <ListItemText primary="Hello" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemText primary="Hello" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemText primary="Hello" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemText primary="Hello" />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemText primary="Hello" />
-                    </ListItem>
+                    {categories.map(category => {
+                        return (
+                            <ListItem button>
+                                <ListItemText primary={category} />
+                            </ListItem>
+                        );
+                    })}
                 </List>
             </Drawer>
         </div>

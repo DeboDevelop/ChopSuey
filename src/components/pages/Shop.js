@@ -1,13 +1,30 @@
-import React from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AllFoodCards from "../common/AllFoodCards";
 
 function Shop() {
     let params = useParams();
-    console.log(params.id);
+    const [foodlist, setFoodlist] = useState([]);
+    useEffect(() => {
+        console.log("Hello");
+        axios
+            .get("http://localhost:1337/dishes")
+            .then(res => {
+                let newFoodlist = [];
+                if (params.id !== undefined)
+                    newFoodlist = res.data.filter(food => food.category["Food_type"] === params.id);
+                else newFoodlist = res.data;
+                setFoodlist(() => [...newFoodlist]);
+            })
+            .catch(err => {
+                setFoodlist([]);
+                console.log(err);
+            });
+    }, [params.id]);
     return (
         <div style={{ marginTop: 70 }}>
-            <AllFoodCards />
+            <AllFoodCards foodlist={foodlist} />
         </div>
     );
 }

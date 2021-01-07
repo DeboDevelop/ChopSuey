@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     },
 });
 
-function FoodCard() {
+function FoodCard({ food }) {
     const classes = useStyles();
     return (
         <div>
@@ -32,11 +32,10 @@ function FoodCard() {
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
-                            Lizard
+                            {food.Name}
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
-                            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across
-                            all continents except Antarctica
+                            {food.Description}
                         </Typography>
                     </CardContent>
                 </CardActionArea>

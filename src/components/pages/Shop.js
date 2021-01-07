@@ -4,10 +4,9 @@ import { useParams } from "react-router-dom";
 import AllFoodCards from "../common/AllFoodCards";
 
 function Shop() {
-    let params = useParams();
+    const params = useParams();
     const [foodlist, setFoodlist] = useState([]);
     useEffect(() => {
-        console.log("Hello");
         axios
             .get("http://localhost:1337/dishes")
             .then(res => {

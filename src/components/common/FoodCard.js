@@ -7,6 +7,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
     root: {
@@ -43,7 +44,7 @@ function FoodCard({ food }) {
                     <Button size="small" color="primary">
                         Add to Card
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" component={Link} to={"/food/" + food.id}>
                         Details
                     </Button>
                 </CardActions>

@@ -15,6 +15,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import axios from "axios";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -27,6 +28,8 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
         flexGrow: 1,
+        textDecoration: "none",
+        color: "#ffffff",
     },
     appBar: {
         transition: theme.transitions.create(["margin", "width"], {
@@ -100,11 +103,16 @@ function NavBar() {
                         aria-label="menu">
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>
+                    <Typography variant="h6" className={classes.title} component={Link} to="/">
                         ChopSuey
                     </Typography>
-                    <Button color="inherit">Login</Button>
-                    <Button color="inherit">Register</Button>
+                    <Button color="inherit" component={Link} to="/login">
+                        Login
+                    </Button>
+
+                    <Button color="inherit" component={Link} to="/register">
+                        Register
+                    </Button>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -129,9 +137,12 @@ function NavBar() {
                         </ListSubheader>
                     }>
                     <Divider />
+                    <ListItem button component={Link} to="/shop">
+                        <ListItemText primary="All Category" />
+                    </ListItem>
                     {categories.map(category => {
                         return (
-                            <ListItem button>
+                            <ListItem button component={Link} to={"/shop/" + category}>
                                 <ListItemText primary={category} />
                             </ListItem>
                         );

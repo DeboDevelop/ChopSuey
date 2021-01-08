@@ -5,7 +5,11 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
+import axios from "axios";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { loginUser } from "../../redux/dispatchers/loginUserDispatcher";
 
 const useStyles = makeStyles({
     formDiv: {
@@ -18,8 +22,47 @@ const useStyles = makeStyles({
     },
 });
 
+const handleAxios = async user => {
+    try {
+        let res = await axios.get("http://localhost:1337/users/me", {
+            headers: {
+                Authorization: `Bearer ${user}`,
+            },
+        });
+        console.log("res" + res);
+        if (res.status === 200) return 1;
+        else return 0;
+    } catch (err) {
+        console.log(err);
+        return 0;
+    }
+};
+
 function Login() {
+    const [userInput, setUserInput] = useState(() => {
+        return { email: "", password: "" };
+    });
+    const handleEmail = value => {
+        setUserInput(() => ({ ...userInput, email: value }));
+    };
+    const handlePassword = value => {
+        setUserInput(() => ({ ...userInput, password: value }));
+    };
+    const handleLogin = () => {
+        dispatch(loginUser(userInput.email, userInput.password));
+        setUserInput(() => ({ email: "", password: "" }));
+    };
+    let history = useHistory();
+    const user = useSelector(state => state.login.user);
+    const dispatch = useDispatch();
     const classes = useStyles();
+    if (typeof user === "string") {
+        console.log("user " + user);
+        if (handleAxios(user) === 1) {
+            console.log("Hoorey");
+            history.push("/someRoute");
+        } else console.log("NOOOOOOO!!!!");
+    }
     return (
         <div>
             <Grid
@@ -42,6 +85,8 @@ function Login() {
                                 label="Email"
                                 variant="outlined"
                                 className={classes.inpDiv}
+                                value={userInput.email}
+                                onChange={e => handleEmail(e.target.value)}
                             />
                             <TextField
                                 id="password"
@@ -49,8 +94,14 @@ function Login() {
                                 label="Password"
                                 variant="outlined"
                                 className={classes.inpDiv}
+                                value={userInput.password}
+                                onChange={e => handlePassword(e.target.value)}
                             />
-                            <Button variant="contained" color="secondary" className={classes.inpDiv}>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                className={classes.inpDiv}
+                                onClick={() => handleLogin()}>
                                 Login
                             </Button>
                         </FormControl>

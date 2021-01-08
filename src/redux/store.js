@@ -6,4 +6,14 @@ import rootReducer from "./reducers/rootReducer";
 
 const loggerMiddleware = createLogger();
 
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunkMiddleware, loggerMiddleware)));
+const persistedState = localStorage.getItem("reduxState") ? JSON.parse(localStorage.getItem("reduxState")) : {};
+
+export const store = createStore(
+    rootReducer,
+    persistedState,
+    composeWithDevTools(applyMiddleware(thunkMiddleware, loggerMiddleware))
+);
+
+store.subscribe(() => {
+    localStorage.setItem("reduxState", JSON.stringify(store.getState()));
+});

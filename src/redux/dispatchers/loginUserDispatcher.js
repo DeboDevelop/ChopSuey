@@ -1,13 +1,13 @@
 import axios from "axios";
 import { LOGIN_USERS_FAILURE, LOGIN_USERS_REQUEST, LOGIN_USERS_SUCCESS } from "../types/loginUserTypes";
 
-export const loginUser = () => {
+export const loginUser = (userEmail, password) => {
     return dispatch => {
         dispatch(loginUsersRequest());
         axios
             .post("http://localhost:1337/auth/local", {
-                identifier: "debajyoti@gmail.com",
-                password: "123456",
+                identifier: userEmail,
+                password: password,
             })
             .then(user => dispatch(loginUsersSuccess(user)))
             .catch(err => dispatch(loginUsersFailure(err)));

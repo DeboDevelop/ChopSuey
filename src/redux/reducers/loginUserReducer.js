@@ -16,7 +16,7 @@ const loginReducer = (state = initialState, action) => {
         case LOGIN_USERS_SUCCESS:
             return {
                 loading: false,
-                user: action.payload,
+                user: action.payload.data.jwt,
                 error: "",
             };
         case LOGIN_USERS_FAILURE:

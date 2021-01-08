@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { loginUser } from "../../redux/dispatchers/loginUserDispatcher";
 
 const useStyles = makeStyles({
@@ -44,7 +44,6 @@ function Login() {
                     Authorization: `Bearer ${user}`,
                 },
             });
-            console.log("res" + res);
             if (res.status === 200) {
                 setToken(user);
             } else {
@@ -55,66 +54,66 @@ function Login() {
             setToken("");
         }
     };
-    let history = useHistory();
-    const user = useSelector(state => state.login.user);
+    const user = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
     const classes = useStyles();
     useEffect(() => {
         if (typeof user === "string") {
             handleAxios(user);
         }
-    });
-    // useEffect(() => {
-    //     history.push("/");
-    // }, [token]);
+    }, [user]);
 
-    return (
-        <div>
-            <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justify="center"
-                style={{ minHeight: "100vh" }}>
-                <Grid item xs={12}>
-                    <Typography variant="h3">Login</Typography>
+    if (token === "") {
+        return (
+            <div>
+                <Grid
+                    container
+                    spacing={0}
+                    direction="column"
+                    alignItems="center"
+                    justify="center"
+                    style={{ minHeight: "100vh" }}>
+                    <Grid item xs={12}>
+                        <Typography variant="h3">Login</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Paper elevation={3} className={classes.formDiv}>
+                            <FormControl noValidate autoComplete="off">
+                                <TextField
+                                    id="email"
+                                    type="email"
+                                    placeholder="user@example.com"
+                                    label="Email"
+                                    variant="outlined"
+                                    className={classes.inpDiv}
+                                    value={userInput.email}
+                                    onChange={e => handleEmail(e.target.value)}
+                                />
+                                <TextField
+                                    id="password"
+                                    type="password"
+                                    label="Password"
+                                    variant="outlined"
+                                    className={classes.inpDiv}
+                                    value={userInput.password}
+                                    onChange={e => handlePassword(e.target.value)}
+                                />
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    className={classes.inpDiv}
+                                    onClick={() => handleLogin()}>
+                                    Login
+                                </Button>
+                            </FormControl>
+                        </Paper>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                    <Paper elevation={3} className={classes.formDiv}>
-                        <FormControl noValidate autoComplete="off">
-                            <TextField
-                                id="email"
-                                type="email"
-                                placeholder="user@example.com"
-                                label="Email"
-                                variant="outlined"
-                                className={classes.inpDiv}
-                                value={userInput.email}
-                                onChange={e => handleEmail(e.target.value)}
-                            />
-                            <TextField
-                                id="password"
-                                type="password"
-                                label="Password"
-                                variant="outlined"
-                                className={classes.inpDiv}
-                                value={userInput.password}
-                                onChange={e => handlePassword(e.target.value)}
-                            />
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                className={classes.inpDiv}
-                                onClick={() => handleLogin()}>
-                                Login
-                            </Button>
-                        </FormControl>
-                    </Paper>
-                </Grid>
-            </Grid>
-        </div>
-    );
+            </div>
+        );
+    } else {
+        return <Redirect to="/" />;
+    }
 }
 
 export default Login;

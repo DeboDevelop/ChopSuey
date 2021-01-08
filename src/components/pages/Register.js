@@ -46,7 +46,7 @@ function Register() {
             setUserInput(() => ({ ...userInput, password: "", password2: "" }));
         }
     };
-    const user = useSelector(state => state.register.user);
+    const user = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
     return (
         <div>

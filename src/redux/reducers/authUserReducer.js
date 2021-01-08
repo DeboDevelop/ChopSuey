@@ -2,7 +2,7 @@ import { AUTH_USERS_FAILURE, AUTH_USERS_REQUEST, AUTH_USERS_SUCCESS } from "../t
 
 const initialState = {
     loading: false,
-    user: {},
+    user: "",
     error: "",
 };
 
@@ -22,7 +22,7 @@ const authReducer = (state = initialState, action) => {
         case AUTH_USERS_FAILURE:
             return {
                 loading: false,
-                user: {},
+                user: "",
                 error: action.payload,
             };
         default:

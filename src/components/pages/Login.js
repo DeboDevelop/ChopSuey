@@ -58,7 +58,7 @@ function Login() {
     const dispatch = useDispatch();
     const classes = useStyles();
     useEffect(() => {
-        if (typeof user === "string") {
+        if (user !== "") {
             handleAxios(user);
         }
     }, [user]);

@@ -16,8 +16,9 @@ import MenuIcon from "@material-ui/icons/Menu";
 import axios from "axios";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { logoutUser } from "../../redux/dispatchers/logoutUserDispatcher";
 
 const drawerWidth = 240;
 
@@ -78,6 +79,7 @@ function NavBar() {
     };
     const [categories, setCategories] = useState([]);
     const user = useSelector(state => state.auth.user);
+    const dispatch = useDispatch();
     useEffect(() => {
         axios
             .get("http://localhost:1337/categories")
@@ -124,7 +126,9 @@ function NavBar() {
                             <IconButton color="inherit" aria-label="cart" component={Link} to="/cart">
                                 <AddShoppingCartIcon />
                             </IconButton>
-                            <Button color="inherit">Logout</Button>
+                            <Button color="inherit" onClick={() => dispatch(logoutUser())}>
+                                Logout
+                            </Button>
                         </>
                     )}
                 </Toolbar>

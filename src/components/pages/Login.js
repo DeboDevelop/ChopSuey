@@ -5,8 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { loginUser } from "../../redux/dispatchers/loginUserDispatcher";
@@ -26,7 +25,6 @@ function Login() {
     const [userInput, setUserInput] = useState(() => {
         return { email: "", password: "" };
     });
-    const [token, setToken] = useState("");
     const handleEmail = value => {
         setUserInput(() => ({ ...userInput, email: value }));
     };
@@ -37,33 +35,11 @@ function Login() {
         dispatch(loginUser(userInput.email, userInput.password));
         setUserInput(() => ({ email: "", password: "" }));
     };
-    const handleAxios = async user => {
-        try {
-            let res = await axios.get("http://localhost:1337/users/me", {
-                headers: {
-                    Authorization: `Bearer ${user}`,
-                },
-            });
-            if (res.status === 200) {
-                setToken(user);
-            } else {
-                setToken("");
-            }
-        } catch (err) {
-            console.log(err);
-            setToken("");
-        }
-    };
     const user = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
     const classes = useStyles();
-    useEffect(() => {
-        if (user !== "") {
-            handleAxios(user);
-        }
-    }, [user]);
 
-    if (token === "") {
+    if (user === "") {
         return (
             <div>
                 <Grid

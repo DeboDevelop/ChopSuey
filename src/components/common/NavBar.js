@@ -10,11 +10,13 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MenuIcon from "@material-ui/icons/Menu";
 import axios from "axios";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -75,6 +77,7 @@ function NavBar() {
         setOpen(false);
     };
     const [categories, setCategories] = useState([]);
+    const user = useSelector(state => state.auth.user);
     useEffect(() => {
         axios
             .get("http://localhost:1337/categories")
@@ -106,13 +109,24 @@ function NavBar() {
                     <Typography variant="h6" className={classes.title} component={Link} to="/">
                         ChopSuey
                     </Typography>
-                    <Button color="inherit" component={Link} to="/login">
-                        Login
-                    </Button>
+                    {user === "" ? (
+                        <>
+                            <Button color="inherit" component={Link} to="/login">
+                                Login
+                            </Button>
 
-                    <Button color="inherit" component={Link} to="/register">
-                        Register
-                    </Button>
+                            <Button color="inherit" component={Link} to="/register">
+                                Register
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            <IconButton color="inherit" aria-label="cart" component={Link} to="/cart">
+                                <AddShoppingCartIcon />
+                            </IconButton>
+                            <Button color="inherit">Logout</Button>
+                        </>
+                    )}
                 </Toolbar>
             </AppBar>
             <Drawer

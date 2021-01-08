@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { loginUser } from "../../redux/dispatchers/loginUserDispatcher";
@@ -22,26 +22,11 @@ const useStyles = makeStyles({
     },
 });
 
-const handleAxios = async user => {
-    try {
-        let res = await axios.get("http://localhost:1337/users/me", {
-            headers: {
-                Authorization: `Bearer ${user}`,
-            },
-        });
-        console.log("res" + res);
-        if (res.status === 200) return 1;
-        else return 0;
-    } catch (err) {
-        console.log(err);
-        return 0;
-    }
-};
-
 function Login() {
     const [userInput, setUserInput] = useState(() => {
         return { email: "", password: "" };
     });
+    const [token, setToken] = useState("");
     const handleEmail = value => {
         setUserInput(() => ({ ...userInput, email: value }));
     };
@@ -52,17 +37,37 @@ function Login() {
         dispatch(loginUser(userInput.email, userInput.password));
         setUserInput(() => ({ email: "", password: "" }));
     };
+    const handleAxios = async user => {
+        try {
+            let res = await axios.get("http://localhost:1337/users/me", {
+                headers: {
+                    Authorization: `Bearer ${user}`,
+                },
+            });
+            console.log("res" + res);
+            if (res.status === 200) {
+                setToken(user);
+            } else {
+                setToken("");
+            }
+        } catch (err) {
+            console.log(err);
+            setToken("");
+        }
+    };
     let history = useHistory();
     const user = useSelector(state => state.login.user);
     const dispatch = useDispatch();
     const classes = useStyles();
-    if (typeof user === "string") {
-        console.log("user " + user);
-        if (handleAxios(user) === 1) {
-            console.log("Hoorey");
-            history.push("/someRoute");
-        } else console.log("NOOOOOOO!!!!");
-    }
+    useEffect(() => {
+        if (typeof user === "string") {
+            handleAxios(user);
+        }
+    });
+    // useEffect(() => {
+    //     history.push("/");
+    // }, [token]);
+
     return (
         <div>
             <Grid

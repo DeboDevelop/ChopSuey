@@ -5,7 +5,9 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../redux/dispatchers/registerUserDispatcher";
 
 const useStyles = makeStyles({
     formDiv: {
@@ -20,6 +22,32 @@ const useStyles = makeStyles({
 
 function Register() {
     const classes = useStyles();
+    const [userInput, setUserInput] = useState(() => {
+        return { username: "", email: "", password: "", password2: "" };
+    });
+    const handleEmail = value => {
+        setUserInput(() => ({ ...userInput, email: value }));
+    };
+    const handlePassword = value => {
+        setUserInput(() => ({ ...userInput, password: value }));
+    };
+    const handlePassword2 = value => {
+        setUserInput(() => ({ ...userInput, password2: value }));
+    };
+    const handleUsername = value => {
+        setUserInput(() => ({ ...userInput, username: value }));
+    };
+    const handleRegister = () => {
+        if (userInput.password === userInput.password2) {
+            dispatch(registerUser(userInput.username, userInput.email, userInput.password));
+            setUserInput(() => ({ username: "", email: "", password: "", password2: "" }));
+        } else {
+            alert("Password doesn't match. Please re enter the values.");
+            setUserInput(() => ({ ...userInput, password: "", password2: "" }));
+        }
+    };
+    const user = useSelector(state => state.register.user);
+    const dispatch = useDispatch();
     return (
         <div>
             <Grid
@@ -41,6 +69,8 @@ function Register() {
                                 label="Username"
                                 variant="outlined"
                                 className={classes.inpDiv}
+                                value={userInput.username}
+                                onChange={e => handleUsername(e.target.value)}
                             />
                             <TextField
                                 id="email"
@@ -49,6 +79,8 @@ function Register() {
                                 label="Email"
                                 variant="outlined"
                                 className={classes.inpDiv}
+                                value={userInput.email}
+                                onChange={e => handleEmail(e.target.value)}
                             />
                             <TextField
                                 id="password"
@@ -56,6 +88,8 @@ function Register() {
                                 label="Password"
                                 variant="outlined"
                                 className={classes.inpDiv}
+                                value={userInput.password}
+                                onChange={e => handlePassword(e.target.value)}
                             />
                             <TextField
                                 id="password2"
@@ -63,8 +97,14 @@ function Register() {
                                 label="Confirm Password"
                                 variant="outlined"
                                 className={classes.inpDiv}
+                                value={userInput.password2}
+                                onChange={e => handlePassword2(e.target.value)}
                             />
-                            <Button variant="contained" color="secondary" className={classes.inpDiv}>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                className={classes.inpDiv}
+                                onClick={() => handleRegister()}>
                                 Register
                             </Button>
                         </FormControl>

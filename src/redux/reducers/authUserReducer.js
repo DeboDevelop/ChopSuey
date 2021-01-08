@@ -1,4 +1,4 @@
-import { LOGIN_USERS_FAILURE, LOGIN_USERS_REQUEST, LOGIN_USERS_SUCCESS } from "../types/loginUserTypes";
+import { AUTH_USERS_FAILURE, AUTH_USERS_REQUEST, AUTH_USERS_SUCCESS } from "../types/authUserTypes";
 
 const initialState = {
     loading: false,
@@ -6,20 +6,20 @@ const initialState = {
     error: "",
 };
 
-const loginReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
     switch (action.type) {
-        case LOGIN_USERS_REQUEST:
+        case AUTH_USERS_REQUEST:
             return {
                 ...state,
                 loading: true,
             };
-        case LOGIN_USERS_SUCCESS:
+        case AUTH_USERS_SUCCESS:
             return {
                 loading: false,
                 user: action.payload.data.jwt,
                 error: "",
             };
-        case LOGIN_USERS_FAILURE:
+        case AUTH_USERS_FAILURE:
             return {
                 loading: false,
                 user: {},
@@ -30,4 +30,4 @@ const loginReducer = (state = initialState, action) => {
     }
 };
 
-export default loginReducer;
+export default authReducer;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOGIN_USERS_FAILURE, LOGIN_USERS_REQUEST, LOGIN_USERS_SUCCESS } from "../types/loginUserTypes";
+import { AUTH_USERS_FAILURE, AUTH_USERS_REQUEST, AUTH_USERS_SUCCESS } from "../types/authUserTypes";
 
 export const loginUser = (userEmail, password) => {
     return dispatch => {
@@ -16,20 +16,20 @@ export const loginUser = (userEmail, password) => {
 
 export const loginUsersRequest = () => {
     return {
-        type: LOGIN_USERS_REQUEST,
+        type: AUTH_USERS_REQUEST,
     };
 };
 
 export const loginUsersSuccess = user => {
     return {
-        type: LOGIN_USERS_SUCCESS,
+        type: AUTH_USERS_SUCCESS,
         payload: user,
     };
 };
 
 export const loginUsersFailure = error => {
     return {
-        type: LOGIN_USERS_FAILURE,
+        type: AUTH_USERS_FAILURE,
         payload: error,
     };
 };

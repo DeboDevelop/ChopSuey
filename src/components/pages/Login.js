@@ -12,7 +12,7 @@ import { Link, Redirect } from "react-router-dom";
 import loginImage from "../../assets/img/loginImage.jpg";
 import { loginUser } from "../../redux/dispatchers/loginUserDispatcher";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     formDiv: {
         padding: 5,
         margin: 10,
@@ -27,11 +27,20 @@ const useStyles = makeStyles({
         height: 350,
         marginBottom: 5,
         borderRadius: "0px 25px 25px 0px",
+        [theme.breakpoints.down("xs")]: {
+            borderRadius: "25px 0px 25px 0px",
+            marginLeft: -100,
+        },
     },
     img: {
         borderRadius: "25px 0px 0px 25px",
     },
-});
+    item: {
+        [theme.breakpoints.down("xs")]: {
+            display: "none",
+        },
+    },
+}));
 
 function Login() {
     const [userInput, setUserInput] = useState(() => {
@@ -63,7 +72,7 @@ function Login() {
                     style={{ minHeight: "100vh" }}>
                     <Grid item xs={12}>
                         <Grid container direction="row" spacing={0} alignItems="center" justify="center">
-                            <Grid item xs={6}>
+                            <Grid item xs={6} className={classes.item}>
                                 <img src={loginImage} alt="Login Food" className={classes.img} />
                             </Grid>
                             <Grid item xs={6}>

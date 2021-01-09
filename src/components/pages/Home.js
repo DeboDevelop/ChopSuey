@@ -1,11 +1,8 @@
 import React from "react";
+import "../../assets/css/home.css";
 
 function Home() {
-    return (
-        <div style={{ marginTop: 70 }}>
-            <h1>Hello</h1>
-        </div>
-    );
+    return <div className="full-bg-size bg-dim"></div>;
 }
 
 export default Home;

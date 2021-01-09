@@ -1,3 +1,4 @@
+import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
@@ -7,7 +8,8 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import loginImage from "../../assets/img/loginImage.jpg";
 import { loginUser } from "../../redux/dispatchers/loginUserDispatcher";
 
 const useStyles = makeStyles({
@@ -18,6 +20,16 @@ const useStyles = makeStyles({
     inpDiv: {
         marginTop: 5,
         marginBottom: 5,
+    },
+    paper: {
+        padding: 30,
+        width: 300,
+        height: 350,
+        marginBottom: 5,
+        borderRadius: "0px 25px 25px 0px",
+    },
+    img: {
+        borderRadius: "25px 0px 0px 25px",
     },
 });
 
@@ -50,39 +62,56 @@ function Login() {
                     justify="center"
                     style={{ minHeight: "100vh" }}>
                     <Grid item xs={12}>
-                        <Typography variant="h3">Login</Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Paper elevation={3} className={classes.formDiv}>
-                            <FormControl noValidate autoComplete="off">
-                                <TextField
-                                    id="email"
-                                    type="email"
-                                    placeholder="user@example.com"
-                                    label="Email"
-                                    variant="outlined"
-                                    className={classes.inpDiv}
-                                    value={userInput.email}
-                                    onChange={e => handleEmail(e.target.value)}
-                                />
-                                <TextField
-                                    id="password"
-                                    type="password"
-                                    label="Password"
-                                    variant="outlined"
-                                    className={classes.inpDiv}
-                                    value={userInput.password}
-                                    onChange={e => handlePassword(e.target.value)}
-                                />
-                                <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    className={classes.inpDiv}
-                                    onClick={() => handleLogin()}>
-                                    Login
-                                </Button>
-                            </FormControl>
-                        </Paper>
+                        <Grid container direction="row" spacing={0} alignItems="center" justify="center">
+                            <Grid item xs={6}>
+                                <img src={loginImage} alt="Login Food" className={classes.img} />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Paper elevation={0} className={classes.paper} square={true}>
+                                    <Typography variant="h3">
+                                        <Box fontWeight="fontWeightBold" textAlign="center" className={classes.inpDiv}>
+                                            Login
+                                        </Box>
+                                    </Typography>
+                                    <FormControl noValidate autoComplete="off">
+                                        <TextField
+                                            id="email"
+                                            type="email"
+                                            placeholder="user@example.com"
+                                            label="Email"
+                                            variant="outlined"
+                                            className={classes.inpDiv}
+                                            value={userInput.email}
+                                            onChange={e => handleEmail(e.target.value)}
+                                        />
+                                        <TextField
+                                            id="password"
+                                            type="password"
+                                            label="Password"
+                                            variant="outlined"
+                                            className={classes.inpDiv}
+                                            value={userInput.password}
+                                            onChange={e => handlePassword(e.target.value)}
+                                        />
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            className={classes.inpDiv}
+                                            onClick={() => handleLogin()}>
+                                            Login
+                                        </Button>
+                                        <Typography variant="body1">
+                                            <Box
+                                                fontWeight="fontWeightBold"
+                                                textAlign="center"
+                                                className={classes.inpDiv}>
+                                                Don't Have a Account? Create One <Link to="/register">Here</Link>.
+                                            </Box>
+                                        </Typography>
+                                    </FormControl>
+                                </Paper>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
             </div>

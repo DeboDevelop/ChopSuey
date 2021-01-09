@@ -10,7 +10,23 @@ export const registerUser = (username, userEmail, password) => {
                 email: userEmail,
                 password: password,
             })
-            .then(user => dispatch(registerUsersSuccess(user)))
+            .then(user => {
+                axios
+                    .post(
+                        "http://localhost:1337/carts",
+                        {
+                            Item_list: "{}",
+                            user_token: user.data.jwt,
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${user.data.jwt}`,
+                            },
+                        }
+                    )
+                    .then(() => dispatch(registerUsersSuccess(user)))
+                    .catch(err => dispatch(registerUsersFailure(err)));
+            })
             .catch(err => dispatch(registerUsersFailure(err)));
     };
 };

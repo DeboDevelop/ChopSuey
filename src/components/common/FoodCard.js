@@ -7,7 +7,9 @@ import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { addCart } from "../../redux/dispatchers/cartAddDispatcher";
 
 const useStyles = makeStyles({
     root: {
@@ -22,6 +24,13 @@ const useStyles = makeStyles({
 
 function FoodCard({ food }) {
     const classes = useStyles();
+    const user = useSelector(state => state.auth.user);
+    const dispatch = useDispatch();
+    const addItem = () => {
+        if (user !== "") {
+            dispatch(addCart({ id: food.id, Name: food.Name, price: food.Price, quantity: 1 }));
+        }
+    };
     return (
         <div>
             <Card className={classes.root}>
@@ -41,7 +50,7 @@ function FoodCard({ food }) {
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => addItem()}>
                         Add to Card
                     </Button>
                     <Button size="small" color="primary" component={Link} to={"/food/" + food.id}>

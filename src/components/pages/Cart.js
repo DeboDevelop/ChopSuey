@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { decrementCart } from "../../redux/dispatchers/cartDecrementDispatcher";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -44,6 +45,9 @@ function Cart() {
         setTotal(totalPrice);
         setItemList(() => arr);
     }, [items]);
+    const decrementItem = item => {
+        dispatch(decrementCart({ id: item.id, quantity: item.quantity }));
+    };
     if (user === "") {
         return <Redirect to="/" />;
     } else {
@@ -194,7 +198,11 @@ function Cart() {
                                         </Grid>
                                         <Grid item xs={2} className={classes.pads}>
                                             <Box textAlign="center">
-                                                <Button size="small" color="secondary" variant="contained">
+                                                <Button
+                                                    size="small"
+                                                    color="secondary"
+                                                    variant="contained"
+                                                    onClick={() => decrementItem(eachItem)}>
                                                     -
                                                 </Button>
                                             </Box>

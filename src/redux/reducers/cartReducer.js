@@ -1,4 +1,11 @@
-import { CART_ADD_FAILURE, CART_ADD_REQUEST, CART_ADD_SUCCESS } from "../types/cartTypes";
+import {
+    CART_ADD_FAILURE,
+    CART_ADD_REQUEST,
+    CART_ADD_SUCCESS,
+    CART_DECREMENT_FAILURE,
+    CART_DECREMENT_REQUEST,
+    CART_DECREMENT_SUCCESS,
+} from "../types/cartTypes";
 
 const initialState = {
     loading: false,
@@ -20,6 +27,23 @@ const cartReducer = (state = initialState, action) => {
                 items: action.payload,
             };
         case CART_ADD_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        case CART_DECREMENT_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+        case CART_DECREMENT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                items: action.payload,
+            };
+        case CART_DECREMENT_FAILURE:
             return {
                 ...state,
                 loading: false,

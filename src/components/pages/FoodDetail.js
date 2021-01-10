@@ -17,6 +17,9 @@ const useStyles = makeStyles(theme => ({
     paper: {
         maxWidth: 900,
         padding: 10,
+        [theme.breakpoints.down("xs")]: {
+            marginTop: 50,
+        },
     },
     img: {
         padding: 10,

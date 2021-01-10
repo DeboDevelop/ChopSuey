@@ -10,7 +10,6 @@ import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     root: {
-        flexGrow: 1,
         marginTop: 70,
     },
     paper: {
@@ -34,11 +33,15 @@ function Cart() {
     const [itemList, setItemList] = useState([]);
     const items = useSelector(state => state.cart.items);
     const dispatch = useDispatch();
+    const [total, setTotal] = useState(0);
     useEffect(() => {
         let arr = [];
+        let totalPrice = 0;
         for (let item_key in items) {
             arr.push({ id: item_key, ...items[item_key] });
+            totalPrice += items[item_key].price * items[item_key].quantity;
         }
+        setTotal(totalPrice);
         setItemList(() => arr);
     }, [items]);
     if (user === "") {
@@ -55,6 +58,72 @@ function Cart() {
                     justify="center"
                     style={{ minHeight: "80vh" }}>
                     <Paper elevation={3} style={{ width: "100vh" }} className={classes.paper}>
+                        {/* <Box display="flex" flexDirection="column" flexWrap="wrap">
+                            <Box display="flex" flexDirection="row" flexwrap="wrap" justifyContent="space-between">
+                                <Typography variant="body1">
+                                    <Box fontWeight="fontWeightBold" textAlign="center">
+                                        Item Name
+                                    </Box>
+                                </Typography>
+                                <Typography variant="body1">
+                                    <Box fontWeight="fontWeightBold" textAlign="center">
+                                        Price
+                                    </Box>
+                                </Typography>
+                                <Typography variant="body1">
+                                    <Box fontWeight="fontWeightBold" textAlign="center">
+                                        Increment
+                                    </Box>
+                                </Typography>
+                                <Typography variant="body1">
+                                    <Box fontWeight="fontWeightBold" textAlign="center">
+                                        Quantity
+                                    </Box>
+                                </Typography>
+                                <Typography variant="body1">
+                                    <Box fontWeight="fontWeightBold" textAlign="center">
+                                        Decrement
+                                    </Box>
+                                </Typography>
+                                <Typography variant="body1">
+                                    <Box fontWeight="fontWeightBold" textAlign="center">
+                                        Total
+                                    </Box>
+                                </Typography>
+                            </Box>
+                            {itemList.map(eachItem => {
+                                return (
+                                    <Box
+                                        display="flex"
+                                        flexDirection="row"
+                                        flexwrap="wrap"
+                                        justifyContent="space-between">
+                                        <Typography variant="body1">
+                                            <Box textAlign="center">{eachItem.Name}</Box>
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            <Box textAlign="center">{eachItem.price}</Box>
+                                        </Typography>
+                                        <Box textAlign="center">
+                                            <Button size="small" color="secondary" variant="contained">
+                                                +
+                                            </Button>
+                                        </Box>
+                                        <Typography variant="body1">
+                                            <Box textAlign="center">x{eachItem.quantity}</Box>
+                                        </Typography>
+                                        <Box textAlign="center">
+                                            <Button size="small" color="secondary" variant="contained">
+                                                -
+                                            </Button>
+                                        </Box>
+                                        <Typography variant="body1">
+                                            <Box textAlign="center">{eachItem.price * eachItem.quantity}</Box>
+                                        </Typography>
+                                    </Box>
+                                );
+                            })}
+                        </Box> */}
                         <Grid container item xs={12} spacing={0} alignItems="center" justify="center">
                             <Grid item xs={4} className={classes.pads}>
                                 <Typography variant="body1">
@@ -63,7 +132,7 @@ function Cart() {
                                     </Box>
                                 </Typography>
                             </Grid>
-                            <Grid item xs={2} className={classes.pads}>
+                            <Grid item xs={1} className={classes.pads}>
                                 <Typography variant="body1">
                                     <Box fontWeight="fontWeightBold" textAlign="center">
                                         Price
@@ -91,6 +160,13 @@ function Cart() {
                                     </Box>
                                 </Typography>
                             </Grid>
+                            <Grid item xs={1} className={classes.pads}>
+                                <Typography variant="body1">
+                                    <Box fontWeight="fontWeightBold" textAlign="center">
+                                        Total
+                                    </Box>
+                                </Typography>
+                            </Grid>
                         </Grid>
                         {itemList.map(eachItem => {
                             return (
@@ -99,7 +175,7 @@ function Cart() {
                                         <Grid item xs={4} className={classes.pads}>
                                             <Typography variant="body1">{eachItem.Name}</Typography>
                                         </Grid>
-                                        <Grid item xs={2} className={classes.pads}>
+                                        <Grid item xs={1} className={classes.pads}>
                                             <Typography variant="body1">
                                                 <Box textAlign="center">{eachItem.price}</Box>
                                             </Typography>
@@ -123,15 +199,23 @@ function Cart() {
                                                 </Button>
                                             </Box>
                                         </Grid>
+                                        <Grid item xs={1} className={classes.pads}>
+                                            <Typography variant="body1">
+                                                <Box textAlign="center">{eachItem.price * eachItem.quantity}</Box>
+                                            </Typography>
+                                        </Grid>
                                     </Grid>
                                 </>
                             );
                         })}
                         <Grid item xs={12} spacing={0} className={classes.pads}>
-                            <Box textAlign="center">
+                            <Box textAlign="center" display="flex" direction="row" flexwrap="wrap">
                                 <Button variant="contained" fullWidth={true} className={classes.button}>
                                     Checkout
                                 </Button>
+                                <Box textAlign="center" m={1}>
+                                    <Typography variant="body1">{total}</Typography>
+                                </Box>
                             </Box>
                         </Grid>
                     </Paper>

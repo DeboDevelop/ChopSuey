@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import cardImage from "../../assets/img/cardImage.jpg";
 import { addCart } from "../../redux/dispatchers/cartAddDispatcher";
 
@@ -35,9 +35,12 @@ function FoodCard({ food }) {
     const classes = useStyles();
     const user = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
+    let history = useHistory();
     const addItem = () => {
         if (user !== "") {
             dispatch(addCart({ id: food.id, Name: food.Name, price: food.Price, quantity: 1 }));
+        } else {
+            history.push("/login");
         }
     };
     return (

@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import foodDetailImage from "../../assets/img/foodDetailImage.jpg";
 import { addCart } from "../../redux/dispatchers/cartAddDispatcher";
 
@@ -37,9 +37,12 @@ function FoodDetail() {
     const user = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
     const [food, setFood] = useState({});
+    let history = useHistory();
     const addItem = () => {
         if (user !== "") {
             dispatch(addCart({ id: food.id, Name: food.Name, price: food.Price, quantity: 1 }));
+        } else {
+            history.push("/login");
         }
     };
     useEffect(() => {

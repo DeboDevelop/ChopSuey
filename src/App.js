@@ -2,7 +2,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import NavBar from "./components/common/NavBar";
 import Cart from "./components/pages/Cart";
 import FoodDetail from "./components/pages/FoodDetail";
@@ -57,6 +57,7 @@ function App() {
                             <Route exact path="/cart">
                                 <Cart />
                             </Route>
+                            <Redirect to="/" />
                         </Switch>
                     </div>
                 </ThemeProvider>

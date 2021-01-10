@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import cardImage from "../../assets/img/cardImage.jpg";
 import { addCart } from "../../redux/dispatchers/cartAddDispatcher";
 
 const useStyles = makeStyles({
@@ -43,11 +44,7 @@ function FoodCard({ food }) {
         <div>
             <Card className={classes.root}>
                 <CardActionArea>
-                    <CardMedia
-                        className={classes.media}
-                        image="https://via.placeholder.com/345x140"
-                        title="Contemplative Reptile"
-                    />
+                    <CardMedia className={classes.media} image={cardImage} title="Food you are about to buy" />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
                             {food.Name}

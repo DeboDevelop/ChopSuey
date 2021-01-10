@@ -8,6 +8,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import foodDetailImage from "../../assets/img/foodDetailImage.jpg";
 import { addCart } from "../../redux/dispatchers/cartAddDispatcher";
 
 const useStyles = makeStyles(theme => ({
@@ -65,11 +66,7 @@ function FoodDetail() {
                     <Paper elevation={3} className={classes.paper}>
                         <Box display="flex" flexDirection="row" flexWrap="wrap">
                             <Box>
-                                <img
-                                    src="https://via.placeholder.com/400x400"
-                                    alt="Food Text"
-                                    className={classes.img}
-                                />
+                                <img src={foodDetailImage} alt="Food Text" className={classes.img} />
                             </Box>
                             <Box className={classes.box}>
                                 <Box fontWeight="fontWeightBold" textAlign="center">

@@ -9,8 +9,6 @@ export const decrementCart = newItem => {
         } else {
             let allItem = reduxState.cart.items ? reduxState.cart.items : {};
             if (allItem.hasOwnProperty(newItem.id)) {
-                console.log("All item" + JSON.stringify(allItem[newItem.id]));
-                console.log("New item" + JSON.stringify(newItem));
                 if (allItem[newItem.id].quantity === 1) {
                     delete allItem[newItem.id];
                     dispatch(cartDecrementSuccess(allItem));

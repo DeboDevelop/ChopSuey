@@ -4,10 +4,12 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { decrementCart } from "../../redux/dispatchers/cartDecrementDispatcher";
+import { incrementCart } from "../../redux/dispatchers/cartIncrementDispatcher";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -46,7 +48,19 @@ function Cart() {
         setItemList(() => arr);
     }, [items]);
     const decrementItem = item => {
-        dispatch(decrementCart({ id: item.id, quantity: item.quantity }));
+        dispatch(decrementCart({ id: item.id }));
+    };
+    const incrementItem = item => {
+        axios
+            .get(`http://localhost:1337/dishes/${item.id}`)
+            .then(res => {
+                if (res.data !== undefined) {
+                    dispatch(incrementCart({ id: item.id, quantity: res.data.quantity }));
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
     if (user === "") {
         return <Redirect to="/" />;
@@ -186,7 +200,11 @@ function Cart() {
                                         </Grid>
                                         <Grid item xs={2} className={classes.pads}>
                                             <Box textAlign="center">
-                                                <Button size="small" color="secondary" variant="contained">
+                                                <Button
+                                                    size="small"
+                                                    color="secondary"
+                                                    variant="contained"
+                                                    onClick={() => incrementItem(eachItem)}>
                                                     +
                                                 </Button>
                                             </Box>

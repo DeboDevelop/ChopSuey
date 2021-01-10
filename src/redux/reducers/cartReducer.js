@@ -2,6 +2,7 @@ import {
     CART_ADD_FAILURE,
     CART_ADD_REQUEST,
     CART_ADD_SUCCESS,
+    CART_CHECKOUT,
     CART_DECREMENT_FAILURE,
     CART_DECREMENT_REQUEST,
     CART_DECREMENT_SUCCESS,
@@ -68,6 +69,12 @@ const cartReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 error: action.payload,
+            };
+        case CART_CHECKOUT:
+            return {
+                loading: false,
+                items: {},
+                error: "",
             };
         default:
             return state;

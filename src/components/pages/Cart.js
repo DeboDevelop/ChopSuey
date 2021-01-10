@@ -8,6 +8,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { checkoutCart } from "../../redux/dispatchers/cartCheckoutDispatcher";
 import { decrementCart } from "../../redux/dispatchers/cartDecrementDispatcher";
 import { incrementCart } from "../../redux/dispatchers/cartIncrementDispatcher";
 
@@ -65,7 +66,6 @@ function Cart() {
     if (user === "") {
         return <Redirect to="/" />;
     } else {
-        console.log(itemList);
         return (
             <div className={classes.root}>
                 <Grid
@@ -236,7 +236,11 @@ function Cart() {
                         })}
                         <Grid item xs={12} spacing={0} className={classes.pads}>
                             <Box textAlign="center" display="flex" direction="row" flexwrap="wrap">
-                                <Button variant="contained" fullWidth={true} className={classes.button}>
+                                <Button
+                                    variant="contained"
+                                    fullWidth={true}
+                                    className={classes.button}
+                                    onClick={() => dispatch(checkoutCart())}>
                                     Checkout
                                 </Button>
                                 <Box textAlign="center" m={1}>

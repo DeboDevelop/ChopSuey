@@ -1,3 +1,4 @@
+import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -19,6 +20,13 @@ const useStyles = makeStyles({
     },
     media: {
         height: 140,
+    },
+    customBox: {
+        display: "-webkit-box",
+        boxOrient: "vertical",
+        lineClamp: 3,
+        wordBreak: "break-all",
+        overflow: "hidden",
     },
 });
 
@@ -45,12 +53,16 @@ function FoodCard({ food }) {
                             {food.Name}
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
-                            {food.Description}
+                            <Box className={classes.customBox}>{food.Description}</Box>
                         </Typography>
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Button size="small" color="primary" onClick={() => addItem()}>
+                    <Button
+                        size="small"
+                        color="primary"
+                        onClick={() => addItem()}
+                        disabled={food.quantity === 0 ? true : false}>
                         Add to Card
                     </Button>
                     <Button size="small" color="primary" component={Link} to={"/food/" + food.id}>
